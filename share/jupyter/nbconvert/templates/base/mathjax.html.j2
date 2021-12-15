@@ -1,37 +1,35 @@
 
-{%- macro mathjax(url="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML-full,Safe") -%}
+{%- macro mathjax(url="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js") -%}
     <!-- Load mathjax -->
-    <script src="{{url}}"> </script>
     <!-- MathJax configuration -->
-    <script type="text/x-mathjax-config">
-    init_mathjax = function() {
-        if (window.MathJax) {
-        // MathJax loaded
-            MathJax.Hub.Config({
-                TeX: {
-                    equationNumbers: {
-                    autoNumber: "AMS",
-                    useLabelIds: true
-                    }
+    <script> 
+        window.MathJax = {
+            tex: {
+                tags: "ams",
+                useLabelIds: true,
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                processEscapes: true,
+                processEnvironments: true,
+                autoload: {
+                color: [],
+                colorv2: ['color']
                 },
-                tex2jax: {
-                    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-                    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-                    processEscapes: true,
-                    processEnvironments: true
-                },
-                displayAlign: 'center',
-                CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
-                    }
-                }
-            });
-        
-            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-        }
-    }
-    init_mathjax();
+                packages: {'[+]': ['noerrors'], '[-]': ['textmacros']}
+            },
+            chtml: {
+                displayAlign: 'center'
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/textmacros', 'ui/safe']
+            }
+        };
     </script>
+    <script src="{{url}}" id="MathJax-script"> </script>
+
     <!-- End of mathjax configuration -->
 {%- endmacro %}
