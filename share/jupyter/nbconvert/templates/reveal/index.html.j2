@@ -146,16 +146,35 @@ require(
             history: true,
             transition: "{{reveal_transition}}",
             slideNumber: "{{reveal_number}}",
-            plugins: [RevealNotes]
+            plugins: [RevealNotes, RevealMath.MathJax3],
+            mathjax3: {
+              mathjax: '{{ resources.mathjax_url }}',
+              tex: {
+                tags: "ams",
+                useLabelIds: true,
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                processEscapes: true,
+                processEnvironments: true,
+                autoload: {
+                color: [],
+                colorv2: ['color']
+                },
+                packages: {'[+]': ['noerrors'], '[-]': ['textmacros']}
+              },
+              chtml: {
+                displayAlign: 'center'
+              },
+              options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+                skipHtmlTags: [ 'script', 'noscript', 'style', 'textarea', 'pre' ]
+              },
+              loader: {
+                load: ['[tex]/noerrors', '[tex]/textmacros', 'ui/safe']
+              }
+            } 
         });
-
-        var update = function(event){
-          if(MathJax.Hub.getAllJax(Reveal.getCurrentSlide())){
-            MathJax.Hub.Rerender(Reveal.getCurrentSlide());
-          }
-        };
-
-        Reveal.addEventListener('slidechanged', update);
 
         function setScrollingSlide() {
             var scroll = {{ reveal_scroll }}
